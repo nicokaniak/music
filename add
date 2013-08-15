@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+import sarge
+
+url = raw_input('URL: ').strip()
+
+result = sarge.run('transmission-remote --download-dir /var/lib/transmission-daemon/downloads/music/ --authenv -a '+sarge.shell_quote(url))
+print result.returncode

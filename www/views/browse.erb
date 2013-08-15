@@ -1,0 +1,10 @@
+<div id="browse">
+	<h2>Directories</h2>
+	<ul>
+    <% if @parent != "." %>
+      <li class="dir"><a href="/browse/<%= @parent %>">..</a></li>
+    <% end %>
+		<%= @directories %>
+		<%= @files %>
+	</ul>
+</div>

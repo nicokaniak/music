@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title><%= "#{@title} - " unless @title.nil? %><%= site_title %></title>
+<link href="/css/style.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div id="page">
+  <% if @user %>
+  Hi <%= @user.username %> (<a href="/logout">logout</a>)
+  <% end %>
+  <% if @breadcrumbs %>
+    <ul id="breadcrumbs">
+      <% @breadcrumbs.each do |part| %>
+        <% if part["href"] %>
+        <% else %>
+          <%= part['caption'] %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+
+	<div id="content">
+		<%= yield %>
+	</div>
+</div>
+
+</body>
+</html>
