@@ -86,7 +86,7 @@ get '/users' do
   erb :users
 end
 
-get '/update/' + settings.update_token do
+post '/update/' + settings.update_token do
   exec 'git pull origin master'
   Process::exit 0
 end
