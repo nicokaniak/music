@@ -1,7 +1,7 @@
 
 before do
   return if request.path_info == "/login"
-  return if request.path_info.match == "^/system"
+  return if request.path_info.match "^/system"
 
   @user = User.get(session[:uid])
   if not @user
