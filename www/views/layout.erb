@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <title><%= "#{@title} - " unless @title.nil? %><%= site_title %></title>
-<link href="/css/style.css" rel="stylesheet" type="text/css" media="screen, projection" />
+<link href="/stylesheet" rel="stylesheet" type="text/css" media="screen, projection" />
 </head>
 <body>
 
 <div id="page">
   <% if @user %>
-  Hi <%= @user.username %> (<a href="/logout">logout</a>)
+  Hi <%= @user.username %> (<a href="/logout">logout</a>)<br/>
+  <a href="/browse/Albums">Albums</a>
   <% end %>
   <% if @breadcrumbs %>
     <ul id="breadcrumbs">

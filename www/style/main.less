@@ -1,0 +1,44 @@
+@darkblue: #2E3340;
+@lightblue: #61778D;
+@lightbrown: #D8D4BA;
+@mediumbrown: #BEB090;
+@darkbrown: #8a7A63;
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: @lightblue;
+}
+
+#page {
+  width: 780px;
+  margin: 30px auto;
+  padding: 15px;
+
+  font-size: 14px;
+
+  background-color: @darkblue;
+  color: @lightbrown;
+}
+
+a {
+  color: @mediumbrown;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+ul {
+  margin: 0 0 0 10px;
+  padding: 0;
+}
+
+li {
+  list-style: circle inside;
+  padding: 3px 0;
+}
+

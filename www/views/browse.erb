@@ -1,10 +1,11 @@
 <div id="browse">
 	<h2>Directories</h2>
 	<ul>
-    <% if @parent != "." %>
-      <li class="dir"><a href="/browse/<%= @parent %>">..</a></li>
+		<% @directories.each do |dir| %>
+      <li class="dir">
+        <a href="/browse<%= dir[:uri] %>"><%= dir[:name] %></a>
+          (<a href="/zip<%= dir[:uri] %>">zip</a>)
+      </li>
     <% end %>
-		<%= @directories %>
-		<%= @files %>
 	</ul>
 </div>

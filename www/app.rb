@@ -24,15 +24,16 @@ configure do
   mime_type :flac, 'audio/flac'
 end
 
+get '/stylesheet' do
+  content_type "text/css"
+  less :main, {
+    :views => settings.root + "/style"
+  }
+end
 
 # List Directory
 get '/browse/*?' do |dir|
-
-  # Build Path from URL parameters
-  @path = dir.to_s.strip
-
-  # Path to the Parent of the directory
-  @parent = File.dirname(@path)
+  @path = "/"+dir.to_s.strip
 
   # Generate breadcrumb style links from the path
   @breadcrumb = [] # Array to store the links
@@ -48,28 +49,32 @@ get '/browse/*?' do |dir|
   end
 
   # Get a list of files and directories in the current directory
-  @directories = ""
-  @files = ""
-  list(@path).each do |x|
-    next if x[0, 1] == '.'
+  @directories = []
+  @files = []
 
-    full_path = settings.file_root + '/' + @path + '/' + x
+  list(@path).each do |path|
+    full_path = settings.file_root + path
 
-    uri_path = URI::encode(@path + '/' + x)
+    uri_path = URI::encode(path)
     uri_path = URI::encode(uri_path, '[]')
 
     if File.directory?(full_path)
-      @directories << "\n<li class=\"dir\">" +
-        "<a href=\"/browse/#{uri_path}\">#{x}</a>" +
-        " (<a href=\"/zip/#{uri_path}\">zip</a>)" +
-        "</li>"
+      @directories.push \
+        :uri => uri_path,
+        :name => File.basename(path)
     else
-      ext = File.extname(full_path)
-      @files << "\n<li class=\"file-#{ ext[1..ext.length-1]}\"><a href=\"/download/#{uri_path}\">#{x}</a></li>"
+      @files.push \
+        :ext => File.extname(full_path),
+        :uri => uri_path,
+        :name => File.basename(path)
     end
   end
 
-  erb :browse
+  if @directories.empty?
+    erb :listing
+  else
+    erb :browse
+  end
 end
 
 get '/users' do

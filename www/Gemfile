@@ -7,3 +7,7 @@ gem "dm-sqlite-adapter"
 gem "bcrypt-ruby"
 gem "taglib-ruby"
 gem "zipruby"
+
+gem "therubyracer"
+gem "less"
+

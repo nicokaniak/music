@@ -1,0 +1,11 @@
+<div id="browse">
+	<h2>Files</h2>
+	<ul>
+		<% @files.each do |file| %>
+      <li class="dir">
+        <a href="/download<%= file[:uri] %>"><%= file[:name] %></a>
+          (<a href="/view<%= file[:uri] %>">view</a>)
+      </li>
+    <% end %>
+	</ul>
+</div>

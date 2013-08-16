@@ -6,4 +6,8 @@
     <strong>Artist:</strong> <%= @artist %><br/>
     <strong>Title:</strong> <%= @title %><br/>
   </p>
+
+  <% if @image %>
+    <img src="<%= @image %>">
+  <% end %>
 </div>
