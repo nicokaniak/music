@@ -24,6 +24,7 @@ end
 get '/download/*' do |dir|
   @path = dir.to_s.strip
 
+  content_type File.extname(@path)
   headers "X-Accel-Redirect" => "/files/#{@path}"
 
   "Sending #{@path}"
