@@ -2,6 +2,7 @@ require './config'
 require 'sinatra'
 require 'bcrypt'
 require 'taglib'
+require 'open-uri'
 
 require './auth'
 require './system'
@@ -17,6 +18,10 @@ helpers do
   def site_title
     'music.submarin.es'
   end
+end
+
+configure do
+  mime_type :flac, 'audio/flac'
 end
 
 
@@ -50,11 +55,17 @@ get '/browse/*?' do |dir|
 
     full_path = settings.file_root + '/' + @path + '/' + x
 
+    uri_path = URI::encode(@path + '/' + x)
+    uri_path = URI::encode(uri_path, '[]')
+
     if File.directory?(full_path)
-      @directories << "\n<li class=\"dir\"><a href=\"/browse/#{@path + '/' + x}\">#{x}</a></li>"
+      @directories << "\n<li class=\"dir\">" +
+        "<a href=\"/browse/#{uri_path}\">#{x}</a>" +
+        " (<a href=\"/zip/#{uri_path}\">zip</a>)" +
+        "</li>"
     else
       ext = File.extname(full_path)
-      @files << "\n<li class=\"file-#{ ext[1..ext.length-1]}\"><a href=\"/download/#{@path + '/' + x}\">#{x}</a></li>"
+      @files << "\n<li class=\"file-#{ ext[1..ext.length-1]}\"><a href=\"/download/#{uri_path}\">#{x}</a></li>"
     end
   end
 

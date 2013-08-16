@@ -1,3 +1,5 @@
+require "zipruby"
+
 # View File
 get '/view/*' do |dir|
   @path = dir.to_s.strip
@@ -18,6 +20,28 @@ get '/view/*' do |dir|
     end
   end
   erb :view
+end
+
+# Zipped download
+get '/zip/*' do |dir|
+  @path = dir.to_s.strip
+
+  tempnam = (Tempfile.new 'zip').path
+
+  Zip::Archive.open(tempnam) do |archive|
+    Dir.entries("#{settings.file_root + '/' + @path}").sort.each do |x|
+      next if x[0, 1] == '.'
+
+      full_path = settings.file_root + '/' + @path + '/' + x
+
+      if not File.directory?(full_path)
+        archive.add_buffer(File.basename(full_path), File.read(full_path));
+      end
+    end
+  end
+
+  send_file tempnam,
+    :filename => File.basename(@path)+".zip"
 end
 
 # Download
