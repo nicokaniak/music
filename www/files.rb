@@ -1,5 +1,11 @@
 require "zipruby"
 
+def list(dir)
+  Dir.entries("#{settings.file_root + '/' + dir}").sort do |a, b|
+    a.downcase <=> b.downcase
+  end
+end
+
 # View File
 get '/view/*' do |dir|
   @path = dir.to_s.strip
@@ -29,7 +35,7 @@ get '/zip/*' do |dir|
   tempnam = (Tempfile.new 'zip').path
 
   Zip::Archive.open(tempnam) do |archive|
-    Dir.entries("#{settings.file_root + '/' + @path}").sort.each do |x|
+    list(@path).each do |x|
       next if x[0, 1] == '.'
 
       full_path = settings.file_root + '/' + @path + '/' + x
