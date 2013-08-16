@@ -66,7 +66,7 @@ get '/browse/*?' do |dir|
   # Get a list of files and directories in the current directory
   @directories = ""
   @files = ""
-  Dir.foreach("#{settings.file_root + '/' + @path}") do |x|
+  Dir.entries("#{settings.file_root + '/' + @path}").sort.each do |x|
     next if x[0, 1] == '.'
 
     full_path = settings.file_root + '/' + @path + '/' + x
