@@ -5,6 +5,7 @@ require 'taglib'
 
 require './auth'
 require './system'
+require './files'
 
 # Set utf-8 for outgoing
 before do
@@ -16,28 +17,6 @@ helpers do
   def site_title
     'music.submarin.es'
   end
-end
-
-# Select File
-get '/view/*' do |dir|
-  @path = dir.to_s.strip
-
-  TagLib::FileRef.open("#{settings.file_root + '/' + @path}") do |fileref|
-    unless fileref.null?
-      tags = fileref.tag
-
-      @artist = tags.artist
-      @album = tags.album
-      @year = tags.year
-
-      @track = tags.track
-      @title = tags.title
-
-      prop = fileref.audio_properties
-      @length = prop.length
-    end
-  end
-  erb :view
 end
 
 
@@ -75,7 +54,7 @@ get '/browse/*?' do |dir|
       @directories << "\n<li class=\"dir\"><a href=\"/browse/#{@path + '/' + x}\">#{x}</a></li>"
     else
       ext = File.extname(full_path)
-      @files << "\n<li class=\"file-#{ ext[1..ext.length-1]}\"><a href=\"/view/#{@path + '/' + x}\">#{x}</a></li>"
+      @files << "\n<li class=\"file-#{ ext[1..ext.length-1]}\"><a href=\"/download/#{@path + '/' + x}\">#{x}</a></li>"
     end
   end
 
