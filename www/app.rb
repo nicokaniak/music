@@ -4,6 +4,7 @@ require 'bcrypt'
 require 'taglib'
 
 require './auth'
+require './system'
 
 # Set utf-8 for outgoing
 before do
@@ -84,11 +85,6 @@ end
 get '/users' do
   @users = User.all
   erb :users
-end
-
-post '/update/' + settings.update_token do
-  exec 'git pull origin master'
-  Process::exit 0
 end
 
 get '/' do
