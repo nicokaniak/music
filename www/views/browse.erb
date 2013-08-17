@@ -4,7 +4,9 @@
 		<% @directories.each do |dir| %>
       <li class="dir">
         <a href="/browse<%= dir[:uri] %>"><%= dir[:name] %></a>
-          (<a href="/zip<%= dir[:uri] %>">zip</a>)
+          <span class="actions">
+            (<a href="/zip<%= dir[:uri] %>">download zip</a>)
+          </span>
       </li>
     <% end %>
 	</ul>

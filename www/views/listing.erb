@@ -3,8 +3,10 @@
 	<ul>
 		<% @files.each do |file| %>
       <li class="dir">
-        <a href="/download<%= file[:uri] %>"><%= file[:name] %></a>
-          (<a href="/view<%= file[:uri] %>">view</a>)
+        <a href="/view<%= file[:uri] %>"><%= file[:name] %></a>
+        <span class="actions">
+          (<a href="/download<%= file[:uri] %>">download file</a>, <a href="/play<%= file[:uri] %>">play song</a>)
+        </span>
       </li>
     <% end %>
 	</ul>

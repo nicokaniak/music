@@ -74,9 +74,22 @@ get '/download/*' do |dir|
 
   # nginx optimisation
   # headers "X-Accel-Redirect" => "/files#{@path}"
+  # Set disposition
 
   send_file full(@path),
     :filename => File.basename(@path)
 end
 
+# Play
+get '/play/*' do |dir|
+  @path = "/"+dir.to_s.strip
 
+  content_type File.extname(@path)
+
+  # nginx optimisation
+  # headers "X-Accel-Redirect" => "/files#{@path}"
+
+  send_file full(@path),
+    :filename => File.basename(@path),
+    :disposition => :inline
+end
